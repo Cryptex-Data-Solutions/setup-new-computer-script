@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VERSION="v3.0.0"
+VERSION="v1.0.0"
 #===============================================================================
 # title           setup-new-computer.sh
-# author          Joel Kesler 
-#                 https://github.com/joelkesler
+# author          Bradley Goulding 
+#                 https://github.com/BradleyGoulding
 #===============================================================================
 #   A shell script to help with the quick setup and installation of tools and 
 #   applications for new developers at Vendasta.
@@ -23,19 +23,20 @@ VERSION="v3.0.0"
 #      Use the email and name you use for Github
 #
 #   5. Follow the Post Installation Instructions in the Readme:
-README="https://github.com/vendasta/setup-new-computer-script#post-installation-instructions"
+README="https://github.com/Cryptex-Data-Solutions/setup-new-computer-script#post-installation-instructions"
 #  
 #===============================================================================
 
 
 # IDEs to make availabe. Please also adjust code to brew cask install
 options[0]="Visual Studio Code";    devtoolchoices[0]="+"
-options[1]="Jetbrains Toolbox";     devtoolchoices[6]=""
-options[2]="Pycharm";               devtoolchoices[1]=""
-options[3]="Goland";                devtoolchoices[2]=""
-options[4]="Webstorm";              devtoolchoices[3]=""
-options[5]="Sublime Text";          devtoolchoices[4]=""
-options[6]="iTerm2";                devtoolchoices[5]=""
+options[1]="Jetbrains Toolbox";     devtoolchoices[7]="+"
+options[2]="PhpStorm";              devtoolchoices[1]="+"
+options[3]="Rider";                 devtoolchoices[2]="+"
+options[4]="WebStorm";              devtoolchoices[3]="+"
+options[4]="Android Studio";        devtoolchoices[4]=""
+options[5]="Sublime Text";          devtoolchoices[5]="+"
+options[6]="iTerm2";                devtoolchoices[6]="+"
 
 
 #===============================================================================
@@ -73,13 +74,15 @@ printStep() {
 
 printLogo() {
 cat << "EOT"
-                      _           _        
-                     | |         | |       
- __   _____ _ __   __| | __ _ ___| |_ __ _ 
- \ \ / / _ \ '_ \ / _` |/ _` / __| __/ _` |
-  \ V /  __/ | | | (_| | (_| \__ \ || (_| |
-   \_/ \___|_| |_|\__,_|\__,_|___/\__\__,_|
- ------------------------------------------
+ _____                  _            
+/  __ \                | |           
+| /  \/_ __ _   _ _ __ | |_ _____  __
+| |   | '__| | | | '_ \| __/ _ \ \/ /
+| \__/\ |  | |_| | |_) | ||  __/>  < 
+ \____/_|   \__, | .__/ \__\___/_/\_\
+             __/ | |                 
+            |___/|_|                 
+ ---------------------------------------
     Q U I C K   S E T U P   S C R I P T
 
 
@@ -132,20 +135,6 @@ if type brew &>/dev/null; then
     done
   fi
 fi
-
-# Google Cloud SDK
-[ -e "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ] && \
-    source "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-[ -e "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc" ] && \
-    source "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-
-# Golang
-export GOPRIVATE="github.com/vendasta"
-export GOPROXY="direct"
-export GO111MODULE="on"
-export GOPATH=\$HOME/go
-export GOBIN=\$GOPATH/bin
-export PATH=\$PATH:\$GOBIN
 
 # NVM
 # This needs to be after "Setting up Path for Homebrew" to override Homebrew Node
@@ -203,20 +192,6 @@ fi
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 fpath=(/usr/local/share/zsh-completions \$fpath)
-
-# Google Cloud SDK
-[ -e "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ] && \
-    source "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-[ -e "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ] && \
-    source "\$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-# Golang
-export GOPRIVATE="github.com/vendasta"
-export GOPROXY="direct"
-export GO111MODULE="on"
-export GOPATH=\$HOME/go
-export GOBIN=\$GOPATH/bin
-export PATH=\$PATH:\$GOBIN
 
 # NVM 
 # This needs to be after "Setting up Path for Homebrew" to override Homebrew Node
@@ -428,20 +403,20 @@ printHeading "Installing Applications"
         printStep "Visual Studio Code"      "brew install --cask visual-studio-code"
     fi
     # Install Jetbrains Toolbox
-    if [[ "${devtoolchoices[1]}" == "+" ]]; then
+    if [[ "${devtoolchoices[7]}" == "+" ]]; then
         printStep "Jetbrains Toolbox"       "brew install --cask jetbrains-toolbox"
     fi
-    # Install PyCharm
+    # Install Rider
     if [[ "${devtoolchoices[2]}" == "+" ]]; then
-        printStep "PyCharm"                 "brew install --cask pycharm"
-    fi
-    # Install Goland
-    if [[ "${devtoolchoices[3]}" == "+" ]]; then
-        printStep "Goland"                  "brew install --cask goland"
+        printStep "Rider"                "brew install --cask rider"
     fi
     # Install WebStorm
-    if [[ "${devtoolchoices[4]}" == "+" ]]; then
+    if [[ "${devtoolchoices[3]}" == "+" ]]; then
         printStep "WebStorm"                "brew install --cask webstorm"
+    fi
+    # Install Android Studio
+    if [[ "${devtoolchoices[4]}" == "+" ]]; then
+        printStep "Android Studio"                "brew install --cask android-studio"
     fi
     # Install Sublime Text
     if [[ "${devtoolchoices[5]}" == "+" ]]; then
@@ -452,20 +427,6 @@ printHeading "Installing Applications"
         printStep "iTerm2"                  "brew install --cask iterm2"
     fi
 printDivider
-
-
-#Install Go
-# TODO: check with @cpenner about current best way to install
-printHeading "Installing Go"
-    printDivider
-        echo "✔ Creating Go directory in home folder [~/go]"
-            mkdir -p ~/go
-    printStep "Go"            "brew install go"
-    printDivider
-        echo "✔ Setting GOPRIVATE enviromental variable"
-            go env -w GOPRIVATE="github.com/vendasta"
-printDivider
-
 
 # Install Node
 printHeading "Installing Node and Angular CLI through NVM"
@@ -507,39 +468,16 @@ printHeading "Installing Node and Angular CLI through NVM"
 printDivider
 
 
-# Install Google Cloud SDK and Components
-printHeading "Install Google Cloud SDK and Components"
-    printStep "Google Cloud SDK"        "brew install --cask google-cloud-sdk"
-    printDivider
-        echo "✔ Prepping Autocompletes and Paths"
-        source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-        source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-    printDivider
-        if [ -e ~/google-cloud-sdk ]; then
-            echo "✔ ~/google-cloud-sdk exists. Skipping"
-        else
-            echo "✔ Creating ~/google-cloud-sdk symlink"
-            ln -s "$(brew --prefix)/Caskroom/google-cloud-sdk" ~/google-cloud-sdk &>/dev/null
-            # make a convenience symlink at the install path for google-cloud-sdk when installed manually
-        fi
-    printStep "App Engine - Go"             "gcloud components install app-engine-go --quiet"
-    printStep "App Engine - Python"         "gcloud components install app-engine-python --quiet"
-    printStep "App Engine - Python Extras"  "gcloud components install app-engine-python-extras --quiet"
-    printStep "Kubectl"                     "gcloud components install kubectl --quiet"
-    printStep "Docker Credentials"          "gcloud components install docker-credential-gcr --quiet"
-printDivider
-
-
 # Install System Tweaks
 printHeading "System Tweaks"
     printDivider
     echo "✔ General: Expand save and print panel by default"
-        defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-        defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-        defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-        defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+        # defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+        # defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+        # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+        # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
     echo "✔ General: Save to disk (not to iCloud) by default"
-        defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+        # defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
     echo "✔ General: Avoid creating .DS_Store files on network volumes"
         defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     printDivider
@@ -548,16 +486,16 @@ printHeading "System Tweaks"
         defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
         defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
     echo "✔ Typing: Disable press-and-hold for keys in favor of key repeat"
-        defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+        # defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
     printDivider
 
     echo "✔ Finder: Show status bar and path bar"
-        defaults write com.apple.finder ShowStatusBar -bool true
-        defaults write com.apple.finder ShowPathbar -bool true
+        # defaults write com.apple.finder ShowStatusBar -bool true
+        # defaults write com.apple.finder ShowPathbar -bool true
     echo "✔ Finder: Disable the warning when changing a file extension"
-        defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+        # defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
     echo "✔ Finder: Show the ~/Library folder"
-        chflags nohidden ~/Library
+        # chflags nohidden ~/Library
     printDivider
         
     echo "✔ Safari: Enable Safari’s Developer Settings"
@@ -574,10 +512,10 @@ printHeading "System Tweaks"
         defaults write com.google.Chrome AppleEnableMouseSwipeNavigateWithScrolls -bool false
         defaults write com.google.Chrome.canary AppleEnableMouseSwipeNavigateWithScrolls -bool false
     echo "✔ Chrome: Use the system print dialog and expand dialog by default"
-        defaults write com.google.Chrome DisablePrintPreview -bool true
-        defaults write com.google.Chrome.canary DisablePrintPreview -bool true
-        defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
-        defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true
+        # defaults write com.google.Chrome DisablePrintPreview -bool true
+        # defaults write com.google.Chrome.canary DisablePrintPreview -bool true
+        # defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
+        # defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true
 printDivider
 
 

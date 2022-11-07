@@ -1,5 +1,5 @@
 # Setup a New Developer Computer
-This script will help with the quick setup and installation of tools and applications for new developers at Vendasta. Tested in Mac OS 10.14 to 12. This script works on both Intel and M1/M2 Macs. 
+This script will help with the quick setup and installation of tools and applications for new developers at Cryptex. Tested in Mac OS 10.14 to 12. This script works on both Intel and M1/M2 Macs. 
 
 You can run this script multiple times without issue. You can also run it on a partially set-up computer and it will only install what is missing.
 
@@ -7,15 +7,11 @@ The script will create/modify `.bash_profile` and `.zprofile` with path and auto
 
 <br>
 
-Looking to use this script at your own company? Check out the [tips for using the script at your own company](#tips-for-using-the-script-at-your-own-company) section.
-
-<br>
-
 ## Quick Install Instructions
 
 Paste the command below in a Mac OS Terminal:
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/vendasta/setup-new-computer-script/master/setup-new-computer.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Cryptex-Data-Solutions/setup-new-computer-script/master/setup-new-computer.sh)"
 ```
 
 ## Manual Install Instructions
@@ -52,11 +48,11 @@ After you have run the script, please complete the following steps to finish set
    
    <br>
 
-2. **Vendasta specific tools**\
+2. **Cryptex specific tools**\
    Follow our onboarding document to complete your setup:
    - [Onboarding New Developers - Setup New Developer’s Computer - Next Steps][nextsteps]
    
-   [nextsteps]: https://vendasta.jira.com/wiki/spaces/RD/pages/199032984/Onboarding+New+Developers#New-Dev%5BhardBreak%5DSetup-New-Developer%E2%80%99s-Computer-with-a-script
+   [nextsteps]: https://github.com/Cryptex-Data-Solutions
 
 <br><br>
 
@@ -76,15 +72,10 @@ compaudit | xargs chmod g-w
 
 <br>
 
-**Setting Up Pycharm with Python 2.7**\
-As Mac OS has recently removed the bundled copy of Python 2.7, please see [this help document on working with our Legacy Appengine projects](https://vendasta.jira.com/wiki/spaces/RD/pages/1688469847/Pycharm+Setup+for+Legacy+Appengine+Python+2.7)
-
-<br>
-
 
 **Installing Node versions**\
 Use nvm to install and upgrade different versions of Node. [Official docs][nvm docs] \
-We use the Node v16 at Vendasta.
+We use the Node v16 at Cryptex.
 ```sh
 # Install the latest version of Node 16 with NPM
 nvm install 16
@@ -249,18 +240,6 @@ autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# Google Cloud SDK
-[ -e "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ] &&     source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-[ -e "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc" ] &&     source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-# Golang
-export GOPRIVATE="github.com/vendasta"
-export GOPROXY="direct"
-export GO111MODULE="on"
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOBIN
-
 # NVM 
 # This needs to be after "Setting up Path for Homebrew" to override Homebrew Node
 export NVM_DIR="$HOME/.nvm"
@@ -339,16 +318,6 @@ node-upgrade() {
  
  
  ### Languages
- <details>
-  <summary>Go</summary>
-  
-   ```sh
-   mkdir -p ~/go
-   brew install go
-   go env -w GOPRIVATE="github.com/vendasta"
-   ```
-</details>
-
 
 <details>
   <summary>Node (from nvm, with npm, nx, husky, Angular CLI, Node-Sass, and Node-Gyp)</summary>
@@ -389,38 +358,6 @@ export NVM_DIR="$HOME/.nvm"
 
 ```
   
-</details>
-
-
-<details>
-  <summary>Ruby</summary>
-  
-```sh
-brew install ruby
-```
-</details>
-	   
-
-<details>
-  <summary>Google Cloud Components</summary>
-  
-```sh
-brew install --cask google-cloud-sdk
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-if [ -e ~/google-cloud-sdk ]; then
-    echo "✔ ~/google-cloud-sdk exists. Skipping"
-else
-    echo "✔ Creating ~/google-cloud-sdk symlink"
-    ln -s "$(brew --prefix)/Caskroom/google-cloud-sdk" ~/google-cloud-sdk &>/dev/null
-    # make a convenience symlink at the install path for google-cloud-sdk when installed manually
-fi
-gcloud components install app-engine-go --quiet
-gcloud components install app-engine-python --quiet
-gcloud components install app-engine-python-extras --quiet
-gcloud components install kubectl --quiet
-gcloud components install docker-credential-gcr --quiet
-```
 </details>
 
 
@@ -492,19 +429,10 @@ brew install --cask jetbrains-toolbox
 
 
 <details>
-  <summary>Pycharm</summary>
+  <summary>Rider</summary>
   
 ```sh
-brew install --cask pycharm
-```
-</details>
-
-
-<details>
-  <summary>Goland</summary>
-  
-```sh
-brew install --cask goland
+brew install --cask rider
 ```
 </details>
 
@@ -514,6 +442,15 @@ brew install --cask goland
   
 ```sh
 brew install --cask webstorm
+```
+</details>
+
+
+<details>
+  <summary>Android Studio</summary>
+  
+```sh
+brew install --cask android-studio
 ```
 </details>
 
@@ -698,12 +635,12 @@ This script helps new developers at Vendasta setup their laptops quicker, lettin
 	   
 I have tried to make this script simple and useful. You will want to customize the installation and configuration to match the tools and services you use at your company.
 	   
-- At Vendasta, we are using Go, Angular, and Google Cloud. You most likely do not use all of these, so remove, change, and tweak to meet your needs.
+- At Cryptex, we are using C#, Angular, and AWS. You most likely do not use all of these, so remove, change, and tweak to meet your needs.
 - We lock our Node version at 16 (using NVM) for best compatibility with Angular and NX. You will likely want to change this. 
-- To customize the [welcome logo](https://github.com/vendasta/setup-new-computer-script/blob/47b7c97f21b293e143a0566cafecec2cfc69c528/setup-new-computer.sh#L74-L90) and add a bit of style, I used the handy [Text to ASCII Art Generator](https://patorjk.com/software/taag/#p=testall&f=Isometric1&t=Vendasta)
+- To customize the [welcome logo](https://github.com/vendasta/setup-new-computer-script/blob/47b7c97f21b293e143a0566cafecec2cfc69c528/setup-new-computer.sh#L74-L90) and add a bit of style, I used the handy [Text to ASCII Art Generator](https://patorjk.com/software/taag/#p=display&f=Doom&t=Cryptex)
 - When you update the script, remember to update the readme "What's Installed" section too
 - Be sure to update both the `.bash_profile` and `.zprofile`
-- This is MIT licensed, so be sure to include the [LICENSE file](https://github.com/vendasta/setup-new-computer-script/blob/master/LICENSE)
+- This is MIT licensed, so be sure to include the [LICENSE file](https://github.com/Cryptex-Data-Solutions/setup-new-computer-script/blob/master/LICENSE)
 - Let me know! It is good to know if you find this helpful
 
 
